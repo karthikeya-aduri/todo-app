@@ -1,0 +1,39 @@
+#menu {
+    padding: 8px 16px;
+    width: 10%;
+    border-right: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+img#menu-icon {
+    height: 40px;
+    width: auto;
+}
+
+#menu>ul {
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+#menu>ul>li {
+    margin-bottom: 5px;
+}
+
+#menu>ul>li>button {
+    font-size: 1.1rem;
+    border: 0;
+    background-color: #FFFFFF;
+}
+
+#menu>ul>li>button:hover {
+    text-decoration: underline;
+}
+
+#toggle-theme>img {
+    height: 40px;
+    width: auto;
+}

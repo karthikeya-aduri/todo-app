@@ -1,0 +1,26 @@
+#dashboard {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+#greeting {
+    padding: 1rem;
+    border-bottom: 1px solid black;
+}
+
+#tasks {
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+#add-task {
+    margin: 0 16px 16px 0;
+    height: 50px;
+    width: 50px;
+    font-size: 1.5em;
+    position: fixed;
+    right: 0;
+    bottom: 0;
+}

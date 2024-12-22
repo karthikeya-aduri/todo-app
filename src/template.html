@@ -5,5 +5,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Todo List</title>
   </head>
-  <body></body>
+  <body>
+    <div id="menu">
+      <ul>
+        <li><img src="./assets/menu-light.png" alt="menu" id="menu-icon" /></li>
+        <li><button type="button">Today</button></li>
+        <li><button type="button">All Tasks</button></li>
+      </ul>
+      <button type="button" id="toggle-theme">
+        <img src="./assets/moon.png" alt="dark" />
+      </button>
+    </div>
+    <div id="dashboard">
+      <div id="greeting">
+        <h1>Good morning!</h1>
+      </div>
+      <div id="tasks">
+        <dialog id="task-dialog">
+          <form method="post" id="task-form">
+            <input
+              type="text"
+              name="title"
+              id="task-title"
+              placeholder="Task Title"
+              required
+            />
+            <input
+              type="text"
+              name="description"
+              id="task-description"
+              placeholder="Task Description"
+            />
+            <label for="dueDate">Due Date:</label>
+            <input type="date" name="dueDate" id="task-dueDate" required />
+            <div id="task-priority">
+              <button type="button" id="low-priority">Low</button>
+              <button type="button" id="medium-priority">Medium</button>
+              <button type="button" id="high-priority">High</button>
+            </div>
+            <button type="submit" id="save-task">Add Task</button>
+          </form>
+          <button type="button" id="close-dialog">Close</button>
+        </dialog>
+        <button type="button" id="add-task">+</button>
+      </div>
+    </div>
+  </body>
 </html>
