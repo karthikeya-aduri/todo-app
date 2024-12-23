@@ -33,6 +33,34 @@ img#menu-icon {
     text-decoration: underline;
 }
 
+#bottom-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#remove-all {
+    padding: 5px;
+    background-color: #cf2317;
+    color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+#remove-all:hover {
+    background-color: #9c231a;
+}
+
+#toggle-theme {
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+#toggle-theme:hover {
+    background-color: lightgray;
+}
+
 #toggle-theme>img {
     height: 40px;
     width: auto;

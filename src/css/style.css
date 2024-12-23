@@ -11,7 +11,8 @@ body {
 
 #task-dialog {
     padding: 16px;
-    width: 350px;
+    width: 550px;
+    height: 300px;
     border: 3px solid black;
     border-radius: 5px;
     position: relative;
@@ -20,10 +21,17 @@ body {
     transform: translate(-50%, -50%);
 }
 
+#task-title,
+#task-description,
+#task-dueDate {
+    font-size: 1.1rem;
+}
+
 #task-form {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    padding: 16px;
     margin-bottom: 10px;
 }
 
@@ -34,4 +42,16 @@ body {
 
 #task-priority>* {
     flex: 1;
+    height: 40px;
+}
+
+#save-task {
+    padding: 5px;
+}
+
+#close-dialog {
+    padding: 5px;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }

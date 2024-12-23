@@ -9,12 +9,15 @@
     <div id="menu">
       <ul>
         <li><img src="./assets/menu-light.png" alt="menu" id="menu-icon" /></li>
-        <li><button type="button">Today</button></li>
-        <li><button type="button">All Tasks</button></li>
+        <li><button type="button" id="show-today">Today</button></li>
+        <li><button type="button" id="show-all">All Tasks</button></li>
       </ul>
-      <button type="button" id="toggle-theme">
-        <img src="./assets/moon.png" alt="dark" />
-      </button>
+      <div id="bottom-buttons">
+        <button type="button" id="remove-all">Remove All Tasks</button>
+        <button type="button" id="toggle-theme">
+          <img src="./assets/moon.png" alt="dark" />
+        </button>
+      </div>
     </div>
     <div id="dashboard">
       <div id="greeting">
@@ -38,10 +41,31 @@
             />
             <label for="dueDate">Due Date:</label>
             <input type="date" name="dueDate" id="task-dueDate" required />
-            <div id="task-priority">
-              <button type="button" id="low-priority">Low</button>
-              <button type="button" id="medium-priority">Medium</button>
-              <button type="button" id="high-priority">High</button>
+            <div id="task-priority" selected-priority="0">
+              <button
+                type="button"
+                class="priority"
+                id="low-priority"
+                pdata="1"
+              >
+                Low
+              </button>
+              <button
+                type="button"
+                class="priority"
+                id="medium-priority"
+                pdata="2"
+              >
+                Medium
+              </button>
+              <button
+                type="button"
+                class="priority"
+                id="high-priority"
+                pdata="3"
+              >
+                High
+              </button>
             </div>
             <button type="submit" id="save-task">Add Task</button>
           </form>
