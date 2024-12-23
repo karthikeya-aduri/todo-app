@@ -1,4 +1,4 @@
-import { clearForm } from "./render.js"
+import { clearForm, renderTasksForToday } from "./render.js"
 import { addTask, createTaskObject } from "./tasks.js"
 
 function addTaskListener(dialog, form) {
@@ -34,7 +34,7 @@ function saveTaskListener(closeDialogButton, taskList) {
         let task = getDialogData();
         addTask(task, taskList);
         localStorage.setItem("tasks", JSON.stringify(taskList));
-        console.log(taskList);
+        renderTasksForToday(taskList);
         closeDialogButton.click();
     });
 }
@@ -55,7 +55,8 @@ function getDialogData() {
     const taskPriorityElement = document.querySelector("#task-priority");
 
     let priority = taskPriorityElement.getAttribute('selected-priority');
-    return createTaskObject(titleElement.value, descriptionElement.value, dueDateElement.value, priority);
+    const status = "Not Completed"
+    return createTaskObject(titleElement.value, descriptionElement.value, dueDateElement.value, priority, status);
 }
 
 export { runDialogListeners }

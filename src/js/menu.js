@@ -4,6 +4,7 @@ function removeAllListener() {
     const removeAllButton = document.querySelector("#remove-all");
     removeAllButton.addEventListener("click", () => {
         localStorage.removeItem("tasks");
+        location.reload();
     });
 }
 

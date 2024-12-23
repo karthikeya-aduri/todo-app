@@ -1,0 +1,14 @@
+#tasks {
+    display: flex;
+    flex-direction: column;
+}
+
+.task {
+    margin: 10px;
+    border: 1px solid black;
+    padding: 16px;
+}
+
+.task>* {
+    margin: 5px;
+}
