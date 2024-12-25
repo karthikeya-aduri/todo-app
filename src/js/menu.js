@@ -1,11 +1,11 @@
 import { reloadTaskContainer, renderTasksFromAList } from "./render.js"
 import { getTasksForToday, getTasksFromLocalStorage } from "./tasks.js";
 
-function filterTaskList(taskList) {
+function filterTaskList(taskList, key) {
     const incompleteTasks = taskList.filter(task => task.status !== "Completed");
     const newCompletedTasks = taskList.filter(task => task.status === "Completed");
-    let oldCompletedTasks = getTasksFromLocalStorage("completed");
-    let completedTasks = oldCompletedTasks.concat(newCompletedTasks);
+    let tasksFromKey = getTasksFromLocalStorage(key);
+    let completedTasks = tasksFromKey.concat(newCompletedTasks);
     localStorage.setItem("tasks", JSON.stringify(incompleteTasks));
     localStorage.setItem("completed", JSON.stringify(completedTasks));
 }

@@ -29,20 +29,29 @@ function reloadTaskContainer() {
 
 function createTaskElement(taskList, i) {
     let task = taskList[i];
+
     let taskContainer = document.createElement('div');
     let taskTitle = document.createElement('h3');
     let taskDescription = document.createElement('p');
     let taskDueDate = document.createElement('p');
     let taskPriority = document.createElement('p');
     let taskStatus = document.createElement('button');
+
     let editDialog = document.createElement('dialog');
     let editForm = document.createElement('form');
     let edit = document.createElement('button');
 
     taskStatus.addEventListener("click", (event) => {
-        event.target.innerText = (event.target.innerText === "Not Completed") ? "Completed" : "Not Completed";
-        task.status = event.target.innerText;
-        filterTaskList(taskList);
+        if (event.target.innerText === "Not Completed") {
+            event.target.innerText = "Completed";
+            task.status = event.target.innerText;
+            filterTaskList(taskList, "completed");
+        }
+        else {
+            event.target.innerText = "Not Completed";
+            task.status = event.target.innerText;
+            filterTaskList(taskList, "tasks");
+        }
         reloadTaskContainer();
     });
 
