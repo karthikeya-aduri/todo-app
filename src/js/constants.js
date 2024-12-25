@@ -4,3 +4,9 @@ export const priorityMap = new Map([
     ["2", "Medium"],
     ["3", "High"],
 ]);
+
+export const windowMap = new Map([
+    ["today", "tasks"],
+    ["all-tasks", "all"],
+    ["completed-tasks", "completed"],
+]);

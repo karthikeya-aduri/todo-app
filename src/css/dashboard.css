@@ -9,10 +9,13 @@
     border-bottom: 1px solid black;
 }
 
-#tasks {
+#task-container {
     position: relative;
     height: 100%;
     width: 100%;
+    scrollbar-gutter: auto;
+    display: flex;
+    flex-direction: column;
 }
 
 #add-task {

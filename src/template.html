@@ -11,9 +11,14 @@
         <li><img src="./assets/menu-light.png" alt="menu" id="menu-icon" /></li>
         <li><button type="button" id="show-today">Today</button></li>
         <li><button type="button" id="show-all">All Tasks</button></li>
+        <li>
+          <button type="button" id="show-completed">Completed Tasks</button>
+        </li>
       </ul>
       <div id="bottom-buttons">
-        <button type="button" id="remove-all">Remove All Tasks</button>
+        <button type="button" id="remove-completed">
+          Remove Completed Tasks
+        </button>
         <button type="button" id="toggle-theme">
           <img src="./assets/moon.png" alt="dark" />
         </button>
@@ -23,7 +28,7 @@
       <div id="greeting">
         <h1>Good morning!</h1>
       </div>
-      <div id="tasks">
+      <div id="task-container">
         <dialog id="task-dialog">
           <form method="post" id="task-form">
             <input

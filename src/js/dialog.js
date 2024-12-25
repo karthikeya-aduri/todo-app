@@ -1,5 +1,5 @@
-import { clearForm, renderTasksForToday } from "./render.js"
-import { addTask, createTaskObject } from "./tasks.js"
+import { clearForm, reloadTaskContainer } from "./render.js"
+import { createTaskObject, getTasksFromLocalStorage } from "./tasks.js"
 
 function addTaskListener(dialog, form) {
     const addTaskButton = document.querySelector('#add-task');
@@ -27,25 +27,26 @@ function closeDialogListener(dialog) {
     return closeDialogButton;
 }
 
-function saveTaskListener(closeDialogButton, taskList) {
+function saveTaskListener(closeDialogButton) {
     const saveTask = document.querySelector("#save-task");
     saveTask.addEventListener("click", (event) => {
         event.preventDefault();
+        let taskList = getTasksFromLocalStorage("tasks");
         let task = getDialogData();
-        addTask(task, taskList);
+        taskList.push(task);
         localStorage.setItem("tasks", JSON.stringify(taskList));
-        renderTasksForToday(taskList);
         closeDialogButton.click();
+        reloadTaskContainer();
     });
 }
 
-function runDialogListeners(taskList) {
+function runDialogListeners() {
     const dialog = document.querySelector("dialog");
     const form = document.querySelector("#task-form");
     addTaskListener(dialog, form);
     priorityListener();
     const closeDialogButton = closeDialogListener(dialog);
-    saveTaskListener(closeDialogButton, taskList);
+    saveTaskListener(closeDialogButton);
 }
 
 function getDialogData() {

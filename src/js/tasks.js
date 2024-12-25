@@ -10,12 +10,18 @@ class Task {
     }
 }
 
-function createTaskObject(title, description, dueDate, selectedPriority, status) {
-    return new Task(title, description, dueDate, selectedPriority, status);
+function getTasksFromLocalStorage(key) {
+    let tasks = localStorage.getItem(key);
+    let taskList;
+    if (tasks === null)
+        taskList = [];
+    else
+        taskList = JSON.parse(tasks);
+    return taskList;
 }
 
-function addTask(task, taskList) {
-    taskList.push(task)
+function createTaskObject(title, description, dueDate, selectedPriority, status) {
+    return new Task(title, description, dueDate, selectedPriority, status);
 }
 
 function compareTasks(task1, task2) {
@@ -29,9 +35,9 @@ function getTasksForToday(taskList) {
     let todayList = [];
     for (let i in taskList) {
         if ((taskList[i].dueDate) === currentDate)
-            todayList.push(Number(i));
+            todayList.push(taskList[i]);
     }
     return todayList;
 }
 
-export { createTaskObject, addTask, getTasksForToday, compareTasks }
+export { getTasksFromLocalStorage, createTaskObject, getTasksForToday, compareTasks }
