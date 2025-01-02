@@ -6,6 +6,7 @@
     background-color: var(--mainBackgroundColor);
     color: var(--mainForegroundColor);
     border: 1px solid var(--borderColor);
+    border-radius: 5px;
 }
 
 .task>* {

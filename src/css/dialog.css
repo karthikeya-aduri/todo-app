@@ -1,7 +1,8 @@
-#task-dialog {
+#task-dialog,
+#edit-dialog {
     padding: 16px;
     width: 550px;
-    height: 300px;
+    height: 310px;
     background-color: var(--mainBackgroundColor);
     color: var(--mainForegroundColor);
     border: 3px solid var(--borderColor);
@@ -14,11 +15,15 @@
 
 #task-title,
 #task-description,
-#task-dueDate {
+#task-dueDate,
+#edit-task-title,
+#edit-task-description,
+#edit-task-dueDate {
     font-size: 1.1rem;
 }
 
-#task-form {
+#task-form,
+#edit-form {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -26,21 +31,25 @@
     margin-bottom: 10px;
 }
 
-#task-priority {
+#task-priority,
+#edit-task-priority {
     display: flex;
     gap: 10px;
 }
 
-#task-priority>* {
+#task-priority>*,
+#edit-task-priority>* {
     flex: 1;
     height: 40px;
 }
 
-#save-task {
+#save-task,
+#save-edited-task {
     padding: 5px;
 }
 
-#close-dialog {
+#close-dialog,
+#close-edit-dialog {
     padding: 5px;
     position: relative;
     left: 50%;

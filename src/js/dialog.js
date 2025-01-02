@@ -9,9 +9,9 @@ function addTaskListener(dialog, form) {
     });
 }
 
-function priorityListener() {
-    const taskPriority = document.querySelector("#task-priority");
-    const taskPriorityButtons = document.querySelectorAll(".priority");
+function priorityListener(query) {
+    const taskPriority = document.querySelector(query);
+    const taskPriorityButtons = document.querySelectorAll(`${query}>*`);
     taskPriorityButtons.forEach((button) => {
         button.addEventListener("click", () => {
             taskPriority.setAttribute('selected-priority', parseInt(button.getAttribute('pdata'), 10));
@@ -32,7 +32,8 @@ function saveTaskListener(closeDialogButton) {
     saveTask.addEventListener("click", (event) => {
         event.preventDefault();
         let taskList = getTasksFromLocalStorage("not-completed");
-        let task = getDialogData();
+        const queries = ["#task-title", "#task-description", "#task-dueDate", "#task-priority"];
+        let task = getDialogData(queries);
         taskList.push(task);
         localStorage.setItem("not-completed", JSON.stringify(taskList));
         closeDialogButton.click();
@@ -44,20 +45,20 @@ function runDialogListeners() {
     const dialog = document.querySelector("dialog");
     const form = document.querySelector("#task-form");
     addTaskListener(dialog, form);
-    priorityListener();
+    priorityListener("#task-priority");
     const closeDialogButton = closeDialogListener(dialog);
     saveTaskListener(closeDialogButton);
 }
 
-function getDialogData() {
-    const titleElement = document.querySelector("#task-title");
-    const descriptionElement = document.querySelector("#task-description");
-    const dueDateElement = document.querySelector("#task-dueDate");
-    const taskPriorityElement = document.querySelector("#task-priority");
+function getDialogData(queries) {
+    const titleElement = document.querySelector(queries[0]);
+    const descriptionElement = document.querySelector(queries[1]);
+    const dueDateElement = document.querySelector(queries[2]);
+    const taskPriorityElement = document.querySelector(queries[3]);
 
     let priority = taskPriorityElement.getAttribute('selected-priority');
     const status = "Not Completed"
     return createTaskObject(titleElement.value, descriptionElement.value, dueDateElement.value, priority, status);
 }
 
-export { runDialogListeners }
+export { runDialogListeners, getDialogData }

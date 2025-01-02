@@ -35,5 +35,5 @@
 }
 
 #add-task:hover {
-    background-color: lightgray;
+    background-color: var(--hoverColor);
 }
