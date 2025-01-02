@@ -3,6 +3,13 @@
     src: url("../assets/Montserrat.woff2");
 }
 
+:root {
+    --mainBackgroundColor: #FFFFFF;
+    --mainForegroundColor: #000000;
+    --hoverColor: #B8B8B8;
+    --borderColor: #161616;
+}
+
 * {
     font-family: "Montserrat", serif;
     padding: 0;

@@ -1,5 +1,9 @@
-import { reloadTaskContainer, renderTasksFromAList } from "./render.js"
+import { reloadTaskContainer, renderTasksFromAList } from "./render.js";
 import { getTasksForToday, getTasksFromLocalStorage } from "./tasks.js";
+import moonImg from "../assets/moon.png";
+import sunImg from "../assets/sun.png";
+import menuLight from "../assets/menu-light.png";
+import menuDark from "../assets/menu-Dark.png";
 
 function filterTaskList(taskList, key) {
     const incompleteTasks = taskList.filter(task => task.status !== "Completed");
@@ -47,11 +51,39 @@ function completedTasksListener() {
     });
 }
 
+function toggleThemeListener() {
+    const toggleButton = document.querySelector("#toggle-theme");
+    toggleButton.addEventListener("click", () => {
+        const root = document.documentElement;
+        const themeIcon = document.querySelector("#toggle-theme>img");
+        const menuIcon = document.querySelector("#menu-icon");
+        if (themeIcon.id === "dark") {
+            themeIcon.src = sunImg;
+            themeIcon.id = "light";
+            menuIcon.src = menuDark;
+            root.style.setProperty("--mainBackgroundColor", "#161616");
+            root.style.setProperty("--mainForegroundColor", "#FFFFFF");
+            root.style.setProperty("--borderColor", "#FFFFFF");
+            root.style.setProperty("--hoverColor", "#3F3F3F");
+        }
+        else {
+            themeIcon.src = moonImg;
+            themeIcon.id = "dark";
+            menuIcon.src = menuLight;
+            root.style.setProperty("--mainBackgroundColor", "#FFFFFF");
+            root.style.setProperty("--mainForegroundColor", "#000000");
+            root.style.setProperty("--borderColor", "#161616");
+            root.style.setProperty("--hoverColor", "#B8B8B8");
+        }
+    });
+}
+
 function runMenuListeners() {
     todayButtonListener();
     allTasksListener();
     completedTasksListener();
     removeCompletedListener();
+    toggleThemeListener();
 }
 
 export { runMenuListeners, filterTaskList, todayButtonListener }

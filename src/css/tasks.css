@@ -2,8 +2,10 @@
     display: flex;
     justify-content: space-between;
     margin: 10px;
-    border: 1px solid black;
     padding: 16px;
+    background-color: var(--mainBackgroundColor);
+    color: var(--mainForegroundColor);
+    border: 1px solid var(--borderColor);
 }
 
 .task>* {
@@ -19,6 +21,7 @@
 #edit-button {
     background-color: green;
     color: white;
+    border: 1px solid var(--borderColor);
     border-radius: 10px;
     font-size: 1.3rem;
 }
@@ -29,6 +32,7 @@
 
 #remove-button {
     background-color: red;
+    border: 1px solid var(--borderColor);
     border-radius: 10px;
     color: white;
     font-size: 2rem;
@@ -36,4 +40,14 @@
 
 #remove-button:hover {
     background-color: darkred;
+}
+
+#status {
+    background-color: var(--mainBackgroundColor);
+    color: var(--mainForegroundColor);
+    border: 1px solid var(--borderColor);
+}
+
+#status:hover {
+    background-color: var(--hoverColor);
 }

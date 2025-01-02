@@ -1,15 +1,16 @@
 #menu {
     padding: 8px 16px;
     width: 13%;
-    border-right: 1px solid black;
+    border-right: 1px solid var(--borderColor);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    background-color: var(--mainBackgroundColor);
 }
 
 img#menu-icon {
     height: 40px;
-    width: auto;
+    width: 40px;
 }
 
 #menu>ul {
@@ -27,7 +28,8 @@ img#menu-icon {
     text-align: left;
     font-size: 1rem;
     border: 0;
-    background-color: #FFFFFF;
+    background-color: var(--mainBackgroundColor);
+    color: var(--mainForegroundColor);
 }
 
 #menu>ul>li>button:hover {
@@ -44,7 +46,7 @@ img#menu-icon {
     padding: 5px;
     background-color: #cf2317;
     color: white;
-    border: 1px solid black;
+    border: 1px solid var(--borderColor);
     border-radius: 5px;
 }
 
@@ -53,16 +55,19 @@ img#menu-icon {
 }
 
 #toggle-theme {
-    background-color: white;
-    border: 1px solid black;
+    background-color: var(--mainBackgroundColor);
+    border: 1px solid var(--borderColor);
     border-radius: 5px;
+    display: flex;
+    justify-content: center;
 }
 
 #toggle-theme:hover {
-    background-color: lightgray;
+    background-color: var(--hoverColor);
 }
 
 #toggle-theme>img {
     height: 40px;
     width: auto;
+    align-self: center;
 }

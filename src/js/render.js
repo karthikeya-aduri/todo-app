@@ -65,7 +65,7 @@ function createTaskData(taskList, i) {
 
     const taskStatus = createElement(
         'button',
-        { class: 'task-buttons' },
+        { class: 'task-buttons', id: 'status' },
         {},
         [{
             event: "click",
