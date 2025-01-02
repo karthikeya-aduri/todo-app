@@ -65,6 +65,7 @@ function toggleThemeListener() {
             root.style.setProperty("--mainForegroundColor", "#FFFFFF");
             root.style.setProperty("--borderColor", "#FFFFFF");
             root.style.setProperty("--hoverColor", "#3F3F3F");
+            localStorage.setItem("theme", JSON.stringify("dark"));
         }
         else {
             themeIcon.src = moonImg;
@@ -74,6 +75,7 @@ function toggleThemeListener() {
             root.style.setProperty("--mainForegroundColor", "#000000");
             root.style.setProperty("--borderColor", "#161616");
             root.style.setProperty("--hoverColor", "#B8B8B8");
+            localStorage.setItem("theme", JSON.stringify("light"));
         }
     });
 }

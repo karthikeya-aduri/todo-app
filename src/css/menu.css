@@ -8,7 +8,7 @@
     background-color: var(--mainBackgroundColor);
 }
 
-img#menu-icon {
+#menu-icon {
     height: 40px;
     width: 40px;
 }
@@ -68,6 +68,6 @@ img#menu-icon {
 
 #toggle-theme>img {
     height: 40px;
-    width: auto;
+    width: 40px;
     align-self: center;
 }
