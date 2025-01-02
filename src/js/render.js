@@ -1,5 +1,5 @@
 import { format } from "date-fns";
-import { priorityMap, windowMap } from "./constants.js";
+import { PRIORITY_MAP, WINDOW_MAP } from "./constants.js";
 import { filterTaskList } from "./menu.js";
 import { getTasksFromLocalStorage } from "./tasks.js";
 
@@ -8,65 +8,139 @@ function clearForm(form) {
 }
 
 function getPriority(priority_str) {
-    return priorityMap.get(priority_str);
+    return PRIORITY_MAP.get(priority_str);
+}
+
+function switchWindow(option) {
+    let taskList;
+    if (option !== "all")
+        taskList = getTasksFromLocalStorage(option);
+    else
+        taskList = getTasksFromLocalStorage("not-completed").concat(getTasksFromLocalStorage("completed"));
+    return taskList;
 }
 
 function reloadTaskContainer() {
     const taskContainer = document.querySelector("#task-container");
     const currentWindow = taskContainer.getAttribute("current-window");
-    const option = windowMap.get(currentWindow);
-    let taskList;
-    if (option !== "all") {
-        taskList = getTasksFromLocalStorage(option);
-    }
-    else {
-        let incompleteList = getTasksFromLocalStorage("tasks");
-        let completedList = getTasksFromLocalStorage("completed");
-        taskList = incompleteList.concat(completedList);
-    }
+    const option = WINDOW_MAP.get(currentWindow);
+    const taskList = switchWindow(option);
     renderTasksFromAList(taskList);
 }
 
-function createTaskElement(taskList, i) {
-    let task = taskList[i];
+function createElement(tag, attributes = {}, styles = {}, eventListeners = []) {
+    const element = document.createElement(tag);
 
-    let taskContainer = document.createElement('div');
-    let taskTitle = document.createElement('h3');
-    let taskDescription = document.createElement('p');
-    let taskDueDate = document.createElement('p');
-    let taskPriority = document.createElement('p');
-    let taskStatus = document.createElement('button');
+    for (const [key, value] of Object.entries(attributes)) {
+        element.setAttribute(key, value);
+    }
 
-    let editDialog = document.createElement('dialog');
-    let editForm = document.createElement('form');
-    let edit = document.createElement('button');
+    for (const [key, value] of Object.entries(styles)) {
+        element.style[key] = value;
+    }
 
-    taskStatus.addEventListener("click", (event) => {
-        if (event.target.innerText === "Not Completed") {
-            event.target.innerText = "Completed";
-            task.status = event.target.innerText;
-            filterTaskList(taskList, "completed");
-        }
-        else {
-            event.target.innerText = "Not Completed";
-            task.status = event.target.innerText;
-            filterTaskList(taskList, "tasks");
-        }
-        reloadTaskContainer();
-    });
+    for (const { event, handler } of eventListeners) {
+        element.addEventListener(event, handler);
+    }
 
+    return element;
+}
+
+function createTaskData(taskList, i) {
+    const task = taskList[i];
+
+    const taskData = createElement('div', {}, { display: 'flex', flexDirection: 'column', gap: '10px' });
+
+    const taskTitle = createElement('h3');
     taskTitle.innerText = task.title;
+
+    const taskDescription = createElement('p');
     taskDescription.innerText = task.description;
+
+    const taskDueDate = createElement('p');
     taskDueDate.innerText = "Due Date : " + format(task.dueDate, "dd-MM-yyyy");
+
+    const taskPriority = createElement('p');
     taskPriority.innerText = "Priority : " + getPriority(task.priority);
+
+    const taskStatus = createElement(
+        'button',
+        { class: 'task-buttons' },
+        {},
+        [{
+            event: "click",
+            handler: (event) => {
+                if (event.target.innerText === "Not Completed") {
+                    event.target.innerText = "Completed";
+                    task.status = event.target.innerText;
+                    filterTaskList(taskList, "completed");
+                } else {
+                    event.target.innerText = "Not Completed";
+                    task.status = event.target.innerText;
+                    filterTaskList(taskList, "not-completed");
+                }
+                reloadTaskContainer();
+            }
+        }]
+    );
     taskStatus.innerText = task.status;
 
-    taskContainer.appendChild(taskTitle);
-    taskContainer.appendChild(taskDueDate);
-    taskContainer.appendChild(taskDueDate);
-    taskContainer.appendChild(taskPriority);
-    taskContainer.appendChild(taskStatus);
-    taskContainer.classList.add('task');
+    taskData.append(taskTitle, taskDueDate, taskPriority, taskStatus);
+
+    return taskData;
+}
+
+function createTaskButtons(taskList, i) {
+    const buttonsContainer = createElement(
+        'div',
+        {},
+        { display: 'flex', gap: '20px', alignSelf: 'center' }
+    );
+
+    const editButton = createElement(
+        'button',
+        { class: 'task-buttons', id: 'edit-button' }
+    );
+    editButton.innerText = "✎";
+
+    const removeButton = createElement(
+        'button',
+        { class: 'task-buttons', id: 'remove-button' },
+        {},
+        [{
+            event: "click",
+            handler: () => {
+                console.log("removed");
+                const task = taskList[i];
+                taskList.splice(i, 1);
+                if (task.status === "Completed")
+                    localStorage.setItem("completed", JSON.stringify(taskList));
+                else
+                    localStorage.setItem("not-completed", JSON.stringify(taskList));
+                reloadTaskContainer();
+            }
+        }]
+    );
+    removeButton.innerText = "🗑";
+
+    buttonsContainer.append(editButton, removeButton);
+    return buttonsContainer;
+}
+
+function createEditDialog() {
+    const editDialog = createElement('dialog');
+    const editForm = createElement('form');
+    editDialog.appendChild(editForm);
+    return editDialog;
+}
+
+function createTaskElement(taskList, i) {
+    const taskContainer = createElement('div', { class: 'task' });
+    const taskData = createTaskData(taskList, i);
+    const buttonsContainer = createTaskButtons(taskList, i);
+    const editDialog = createEditDialog();
+
+    taskContainer.append(taskData, editDialog, buttonsContainer);
 
     return taskContainer;
 }

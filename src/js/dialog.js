@@ -31,10 +31,10 @@ function saveTaskListener(closeDialogButton) {
     const saveTask = document.querySelector("#save-task");
     saveTask.addEventListener("click", (event) => {
         event.preventDefault();
-        let taskList = getTasksFromLocalStorage("tasks");
+        let taskList = getTasksFromLocalStorage("not-completed");
         let task = getDialogData();
         taskList.push(task);
-        localStorage.setItem("tasks", JSON.stringify(taskList));
+        localStorage.setItem("not-completed", JSON.stringify(taskList));
         closeDialogButton.click();
         reloadTaskContainer();
     });

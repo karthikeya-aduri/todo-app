@@ -20,11 +20,12 @@ img#menu-icon {
 }
 
 #menu>ul>li {
-    margin-bottom: 5px;
+    margin-bottom: 10px;
 }
 
 #menu>ul>li>button {
-    font-size: 1.1rem;
+    text-align: left;
+    font-size: 1rem;
     border: 0;
     background-color: #FFFFFF;
 }

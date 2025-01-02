@@ -6,7 +6,7 @@ function filterTaskList(taskList, key) {
     const newCompletedTasks = taskList.filter(task => task.status === "Completed");
     let tasksFromKey = getTasksFromLocalStorage(key);
     let completedTasks = tasksFromKey.concat(newCompletedTasks);
-    localStorage.setItem("tasks", JSON.stringify(incompleteTasks));
+    localStorage.setItem("not-completed", JSON.stringify(incompleteTasks));
     localStorage.setItem("completed", JSON.stringify(completedTasks));
 }
 
@@ -23,7 +23,7 @@ function todayButtonListener() {
     todayButton.addEventListener("click", () => {
         const taskContainer = document.querySelector("#task-container");
         taskContainer.setAttribute("current-window", "today");
-        const taskList = getTasksFromLocalStorage("tasks");
+        const taskList = getTasksFromLocalStorage("not-completed");
         const todayList = getTasksForToday(taskList);
         renderTasksFromAList(todayList);
     });

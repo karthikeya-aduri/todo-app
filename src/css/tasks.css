@@ -1,4 +1,6 @@
 .task {
+    display: flex;
+    justify-content: space-between;
     margin: 10px;
     border: 1px solid black;
     padding: 16px;
@@ -6,4 +8,32 @@
 
 .task>* {
     margin: 5px;
+}
+
+.task-buttons {
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 2px;
+}
+
+#edit-button {
+    background-color: green;
+    color: white;
+    border-radius: 10px;
+    font-size: 1.3rem;
+}
+
+#edit-button:hover {
+    background-color: darkgreen;
+}
+
+#remove-button {
+    background-color: red;
+    border-radius: 10px;
+    color: white;
+    font-size: 2rem;
+}
+
+#remove-button:hover {
+    background-color: darkred;
 }
