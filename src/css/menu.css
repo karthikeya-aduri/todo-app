@@ -24,7 +24,7 @@
     margin-bottom: 10px;
 }
 
-#menu>ul>li>button {
+.menu-item {
     text-align: left;
     font-size: 1rem;
     border: 0;
@@ -32,8 +32,19 @@
     color: var(--mainForegroundColor);
 }
 
-#menu>ul>li>button:hover {
+.menu-item:hover {
     text-decoration: underline;
+}
+
+#show-projects {
+    background-color: var(--mainBackgroundColor);
+    color: var(--mainForegroundColor);
+    border: 0;
+    font-size: 1rem;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 #bottom-buttons {
@@ -70,4 +81,80 @@
     height: 40px;
     width: 40px;
     align-self: center;
+}
+
+.hover-button {
+    font-size: 1rem;
+    text-align: left;
+    background-color: var(--mainBackgroundColor);
+    color: var(--mainForegroundColor);
+    border: 0;
+}
+
+.hover-button:hover {
+    text-decoration: underline;
+}
+
+#add-project-dialog,
+#remove-project-dialog {
+    padding: 16px;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--mainBackgroundColor);
+    color: var(--mainForegroundColor);
+    border: 1px solid var(--borderColor);
+}
+
+#add-project-dialog>button,
+#remove-project-dialog>button {
+    background-color: var(--mainBackgroundColor);
+    color: var(--mainForegroundColor);
+    border: 1px solid var(--borderColor);
+    border-radius: 5px;
+    padding: 2px;
+}
+
+#add-project-dialog>button:hover,
+#remove-project-dialog>button:hover {
+    background-color: var(--hoverColor);
+}
+
+#add-project-form,
+#remove-project-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#add-project-form>*,
+#remove-project-form>* {
+    background-color: var(--mainBackgroundColor);
+    color: var(--mainForegroundColor);
+}
+
+#add-project-form>button,
+#remove-project-form>button {
+    border: 1px solid var(--borderColor);
+    border-radius: 5px;
+    padding: 2px;
+}
+
+#add-project-form>button:hover,
+#remove-project-form>button:hover {
+    background-color: var(--hoverColor);
+}
+
+#select-project,
+#select-project>option {
+    background-color: var(--mainBackgroundColor);
+    color: var(--mainForegroundColor);
+    border: 1px solid var(--borderColor);
+    border-radius: 5px;
+    padding: 2px;
+}
+
+#select-project:hover {
+    background-color: var(--hoverColor);
 }

@@ -21,13 +21,23 @@ function getTheme() {
     return theme;
 }
 
+function setDefaultProject() {
+    const projects = localStorage.getItem("projects");
+    if (projects === null) {
+        let projectList = ['-'];
+        localStorage.setItem("projects", JSON.stringify(projectList));
+    }
+}
+
 function main() {
+    setDefaultProject();
     runDialogListeners();
     runMenuListeners();
     getGreeting();
+    const timeDelay = 3600000;
+    setInterval(getGreeting, timeDelay);
     clickButton("#show-today");
     let theme = getTheme();
-    console.log(theme);
     if (theme === "dark") {
         const toggleThemeButton = document.querySelector('#toggle-theme');
         toggleThemeButton.click();

@@ -244,4 +244,4 @@ function renderTasksFromAList(taskList) {
     }
 }
 
-export { clearForm, createTaskElement, reloadTaskContainer, renderTasksFromAList }
+export { clearForm, createTaskElement, reloadTaskContainer, renderTasksFromAList, createElement }

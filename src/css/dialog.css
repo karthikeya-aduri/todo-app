@@ -19,6 +19,8 @@
 #edit-task-title,
 #edit-task-description,
 #edit-task-dueDate {
+    background-color: var(--mainBackgroundColor);
+    color: var(--mainForegroundColor);
     font-size: 1.1rem;
 }
 
@@ -41,11 +43,19 @@
 #edit-task-priority>* {
     flex: 1;
     height: 40px;
+    background-color: var(--mainBackgroundColor);
+    color: var(--mainForegroundColor);
+    border: 1px solid var(--borderColor);
+    border-radius: 5px;
 }
 
 #save-task,
 #save-edited-task {
     padding: 5px;
+    background-color: var(--mainBackgroundColor);
+    color: var(--mainForegroundColor);
+    border: 1px solid var(--borderColor);
+    border-radius: 5px;
 }
 
 #close-dialog,
@@ -54,4 +64,17 @@
     position: relative;
     left: 50%;
     transform: translate(-50%, -50%);
+    background-color: var(--mainBackgroundColor);
+    color: var(--mainForegroundColor);
+    border: 1px solid var(--borderColor);
+    border-radius: 5px;
+}
+
+#task-priority>*:hover,
+#edit-task-priority>*:hover,
+#save-task:hover,
+#save-edited-task:hover,
+#close-dialog:hover,
+#close-edit-dialog:hover {
+    background-color: var(--hoverColor);
 }
