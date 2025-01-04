@@ -2,6 +2,7 @@ import "./imports.js"
 import { runDialogListeners } from "./dialog.js";
 import { runMenuListeners } from "./menu.js";
 import { getGreeting } from "./greeting.js";
+import { createElement } from "./render.js";
 
 function clickButton(query) {
     const button = document.querySelector(query);

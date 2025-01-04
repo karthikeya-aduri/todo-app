@@ -2,7 +2,7 @@ import { format } from "date-fns";
 import { PRIORITY_MAP, WINDOW_MAP } from "./constants.js";
 import { filterTaskList } from "./menu.js";
 import { getTasksFromLocalStorage } from "./tasks.js";
-import { getDialogData } from "./dialog.js";
+import { createProjectOptions, getDialogData } from "./dialog.js";
 
 function clearForm(form) {
     form.reset();
@@ -86,12 +86,17 @@ function createTaskData(taskList, i) {
     );
     taskStatus.innerText = task.status;
 
-    taskData.append(taskTitle, taskDescription, taskDueDate, taskPriority, taskStatus);
+    const project = createElement('p');
+    project.innerText = `Project : ${taskList[i].project}`;
+
+    taskData.append(taskTitle, taskDescription, taskDueDate, taskPriority, project, taskStatus);
 
     return taskData;
 }
 
-function createTaskButtons(taskList, i, editDialog) {
+function createTaskButtons(taskList, i) {
+    let editDialog;
+
     const buttonsContainer = createElement(
         'div',
         {},
@@ -100,11 +105,19 @@ function createTaskButtons(taskList, i, editDialog) {
 
     const editButton = createElement(
         'button',
-        { class: 'task-buttons', id: 'edit-button' },
+        { class: 'task-buttons', class: 'edit-button' },
         {},
         [{
             event: "click",
             handler: () => {
+                const taskDialog = document.querySelector('#task-dialog');
+                editDialog = document.querySelector('#edit-dialog');
+                if (editDialog) {
+                    editDialog.remove();
+                }
+                editDialog = createEditDialog(taskList, i);
+                taskDialog.before(editDialog);
+                createProjectOptions('#select-new-project', 0);
                 editDialog.showModal();
             }
         }]
@@ -113,7 +126,7 @@ function createTaskButtons(taskList, i, editDialog) {
 
     const removeButton = createElement(
         'button',
-        { class: 'task-buttons', id: 'remove-button' },
+        { class: 'task-buttons', class: 'remove-button' },
         {},
         [{
             event: "click",
@@ -149,6 +162,7 @@ function createEditForm(taskList, i, closeEditDialogButton) {
     const lowPriority = createElement('button', { type: "button", class: "priority", pdata: "1" });
     const mediumPriority = createElement('button', { type: "button", class: "priority", pdata: "2" });
     const highPriority = createElement('button', { type: "button", class: "priority", pdata: "3" });
+    const selectProject = createElement('select', { id: "select-new-project" });
 
     const saveTask = createElement('button', { id: "save-edited-task", type: "submit" });
 
@@ -172,7 +186,7 @@ function createEditForm(taskList, i, closeEditDialogButton) {
 
     saveTask.addEventListener('click', (event) => {
         event.preventDefault();
-        const queries = ["#edit-task-title", "#edit-task-description", "#edit-task-dueDate", "#edit-task-priority"];
+        const queries = ["#edit-task-title", "#edit-task-description", "#edit-task-dueDate", "#edit-task-priority", "#select-new-project"];
         let task = getDialogData(queries);
         if (task.title !== "")
             taskList[i].title = task.title;
@@ -182,6 +196,8 @@ function createEditForm(taskList, i, closeEditDialogButton) {
             taskList[i].dueDate = task.dueDate;
         if (task.priority !== "0")
             taskList[i].priority = task.priority;
+        if (task.project)
+            taskList[i].project = task.project;
         if (taskList[i].status === "Completed")
             localStorage.setItem("completed", JSON.stringify(taskList));
         else
@@ -192,7 +208,7 @@ function createEditForm(taskList, i, closeEditDialogButton) {
 
 
     priorityButtons.append(lowPriority, mediumPriority, highPriority);
-    editForm.append(titleInput, descriptionInput, dueDateLabel, dueDateInput, priorityButtons, saveTask);
+    editForm.append(titleInput, descriptionInput, dueDateLabel, dueDateInput, priorityButtons, selectProject, saveTask);
     editForm.id = "edit-form";
 
     return editForm;
@@ -220,10 +236,11 @@ function createEditDialog(taskList, i) {
 function createTaskElement(taskList, i) {
     const taskContainer = createElement('div', { class: 'task' });
     const taskData = createTaskData(taskList, i);
-    const editDialog = createEditDialog(taskList, i);
-    const buttonsContainer = createTaskButtons(taskList, i, editDialog);
+    const buttonsContainer = createTaskButtons(taskList, i);
+    const project = createElement('p');
+    project.innerText = taskList[i].project;
 
-    taskContainer.append(taskData, editDialog, buttonsContainer);
+    taskContainer.append(taskData, buttonsContainer);
 
     return taskContainer;
 }

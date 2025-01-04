@@ -1,12 +1,13 @@
 import { format } from "date-fns";
 
 class Task {
-    constructor(title, description, dueDate, priority, status) {
+    constructor(title, description, dueDate, priority, status, project) {
         this.title = title;
         this.description = description;
         this.dueDate = dueDate;
         this.priority = priority;
         this.status = status;
+        this.project = project;
     }
 }
 
@@ -20,8 +21,8 @@ function getTasksFromLocalStorage(key) {
     return taskList;
 }
 
-function createTaskObject(title, description, dueDate, selectedPriority, status) {
-    return new Task(title, description, dueDate, selectedPriority, status);
+function createTaskObject(title, description, dueDate, selectedPriority, status, project) {
+    return new Task(title, description, dueDate, selectedPriority, status, project);
 }
 
 function compareTasks(task1, task2) {

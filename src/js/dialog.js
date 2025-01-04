@@ -1,10 +1,35 @@
-import { clearForm, reloadTaskContainer } from "./render.js"
+import { clearForm, reloadTaskContainer, createElement } from "./render.js"
 import { createTaskObject, getTasksFromLocalStorage } from "./tasks.js"
+
+function getDialogData(queries) {
+    const titleElement = document.querySelector(queries[0]);
+    const descriptionElement = document.querySelector(queries[1]);
+    const dueDateElement = document.querySelector(queries[2]);
+    const taskPriorityElement = document.querySelector(queries[3]);
+
+    let priority = taskPriorityElement.getAttribute('selected-priority');
+    const status = "Not Completed"
+    let project = document.querySelector(queries[4]);
+    return createTaskObject(titleElement.value, descriptionElement.value, dueDateElement.value, priority, status, project.value);
+}
+
+function createProjectOptions(query, start) {
+    const selectProject = document.querySelector(query);
+    const options = document.querySelectorAll(`${query}>option`);
+    options.forEach(option => { option.remove(); });
+    let projectList = JSON.parse(localStorage.getItem("projects"));
+    for (let i = start; i < projectList.length; i++) {
+        let option = createElement('option', { value: `${projectList[i]}` });
+        option.innerText = projectList[i];
+        selectProject.append(option);
+    }
+}
 
 function addTaskListener(dialog, form) {
     const addTaskButton = document.querySelector('#add-task');
     addTaskButton.addEventListener("click", () => {
         clearForm(form);
+        createProjectOptions('#select-project', 0);
         dialog.showModal();
     });
 }
@@ -32,7 +57,7 @@ function saveTaskListener(closeDialogButton) {
     saveTask.addEventListener("click", (event) => {
         event.preventDefault();
         let taskList = getTasksFromLocalStorage("not-completed");
-        const queries = ["#task-title", "#task-description", "#task-dueDate", "#task-priority"];
+        const queries = ["#task-title", "#task-description", "#task-dueDate", "#task-priority", "#select-project"];
         let task = getDialogData(queries);
         taskList.push(task);
         localStorage.setItem("not-completed", JSON.stringify(taskList));
@@ -50,15 +75,4 @@ function runDialogListeners() {
     saveTaskListener(closeDialogButton);
 }
 
-function getDialogData(queries) {
-    const titleElement = document.querySelector(queries[0]);
-    const descriptionElement = document.querySelector(queries[1]);
-    const dueDateElement = document.querySelector(queries[2]);
-    const taskPriorityElement = document.querySelector(queries[3]);
-
-    let priority = taskPriorityElement.getAttribute('selected-priority');
-    const status = "Not Completed"
-    return createTaskObject(titleElement.value, descriptionElement.value, dueDateElement.value, priority, status);
-}
-
-export { runDialogListeners, getDialogData }
+export { runDialogListeners, getDialogData, createProjectOptions }

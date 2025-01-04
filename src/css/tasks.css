@@ -13,13 +13,15 @@
     margin: 5px;
 }
 
-.task-buttons {
+.task-buttons,
+.edit-button,
+.remove-button {
     padding: 10px;
     border: 1px solid black;
     border-radius: 2px;
 }
 
-#edit-button {
+.edit-button {
     background-color: green;
     color: white;
     border: 1px solid var(--borderColor);
@@ -27,11 +29,11 @@
     font-size: 1.3rem;
 }
 
-#edit-button:hover {
+.edit-button:hover {
     background-color: darkgreen;
 }
 
-#remove-button {
+.remove-button {
     background-color: red;
     border: 1px solid var(--borderColor);
     border-radius: 10px;
@@ -39,7 +41,7 @@
     font-size: 2rem;
 }
 
-#remove-button:hover {
+.remove-button:hover {
     background-color: darkred;
 }
 

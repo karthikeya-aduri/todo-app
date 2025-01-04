@@ -4,6 +4,7 @@ import moonImg from "../assets/moon.png";
 import sunImg from "../assets/sun.png";
 import menuLight from "../assets/menu-light.png";
 import menuDark from "../assets/menu-Dark.png";
+import { createProjectOptions } from "./dialog.js";
 
 function filterTaskList(taskList, key) {
     const incompleteTasks = taskList.filter(task => task.status !== "Completed");
@@ -115,56 +116,98 @@ function createAddProjectDialog() {
     return addProjectDialog;
 }
 
+function updateProjectList(selectedProject) {
+    let projectList = JSON.parse(localStorage.getItem("projects"));
+    projectList = projectList.filter(project => project !== selectedProject);
+    localStorage.setItem("projects", JSON.stringify(projectList));
+}
+
+function changeProjectToDefault(taskList, selectedProject) {
+    for (let i = 0; i < taskList.length; i++) {
+        if (taskList[i].project !== selectedProject)
+            continue;
+        taskList[i].project = '-';
+    }
+}
+
+function updateTaskList(userInput, selectedProject) {
+    let incompletetaskList = getTasksFromLocalStorage("not-completed");
+    let completetaskList = getTasksFromLocalStorage("completed");
+    if (userInput) {
+        changeProjectToDefault(incompletetaskList, selectedProject);
+        changeProjectToDefault(completetaskList, selectedProject);
+    }
+    else {
+        incompletetaskList = incompletetaskList.filter(task => task.project !== selectedProject);
+        completetaskList = incompletetaskList.filter(task => task.project !== selectedProject);
+    }
+    localStorage.setItem("not-completed", JSON.stringify(incompletetaskList));
+    localStorage.setItem("completed", JSON.stringify(completetaskList));
+}
+
 function createRemoveProjectDialog() {
     const removeProjectDialog = createElement('dialog');
     removeProjectDialog.id = 'remove-project-dialog';
     const removeProjectForm = createElement('form', { id: "remove-project-form" });
     const selectProjectLabel = createElement('label');
     selectProjectLabel.innerText = 'Select project :';
-    const selectProject = createElement('select', { id: "select-project" });
+    const selectProject = createElement('select', { id: "remove-project" });
     const removeProject = createElement('button', { type: "submit" });
     removeProject.innerText = "Remove";
     const closeRemoveProjectDialog = createElement('button', { type: "button" }, { margin: "10px 0 0 0" });
     closeRemoveProjectDialog.innerText = "Close";
-    let projectList = JSON.parse(localStorage.getItem("projects"));
-    if (projectList.length > 1) {
-        for (let i = 1; i < projectList.length; i++) {
-            let option = createElement('option', { value: `${projectList[i]}` });
-            option.innerText = projectList[i];
-            selectProject.append(option);
-        }
-    }
+    const p = createElement('p');
+    p.innerText = 'Keep Tasks?';
+    const div1 = createElement('div');
+    const yesInput = createElement('input', { type: 'radio', id: 'yes-button', name: 'keep-tasks', value: 'yes' });
+    const yesLabel = createElement('label', { for: 'yes' });
+    yesLabel.innerText = "Yes";
+    div1.append(yesInput, yesLabel);
+    const div2 = createElement('div');
+    const noInput = createElement('input', { type: 'radio', id: 'no-button', name: 'keep-tasks', value: 'no', checked: "true" });
+    const noLabel = createElement('label', { for: 'no' });
+    noLabel.innerText = "No";
+    div2.append(noInput, noLabel);
     removeProject.addEventListener("click", (event) => {
         event.preventDefault();
-        //TODO: Update taskList with the project depending on user input.
-        let projectList = JSON.parse(localStorage.getItem("projects"));
-        let selectedProject = selectProject.value;
-        projectList = projectList.filter(project => project !== selectedProject);
-        localStorage.setItem("projects", JSON.stringify(projectList));
+        let userInput;
+        if (yesInput.checked) {
+            userInput = true;
+        }
+        else {
+            userInput = false;
+        }
+        updateTaskList(userInput, selectProject.value);
+        updateProjectList(selectProject.value);
         closeRemoveProjectDialog.click();
+        reloadTaskContainer();
     });
     closeRemoveProjectDialog.addEventListener("click", () => { removeProjectDialog.close(); });
-    removeProjectForm.append(selectProjectLabel, selectProject, removeProject);
+    removeProjectForm.append(selectProjectLabel, selectProject, p, div1, div2, removeProject);
     removeProjectDialog.append(removeProjectForm, closeRemoveProjectDialog);
     return removeProjectDialog;
 }
 
 function projectsListener() {
     const projectsButton = document.querySelector("#show-projects");
+    const addProjectDialog = createAddProjectDialog();
+    const removeProjectDialog = createRemoveProjectDialog();
     projectsButton.addEventListener("mouseenter", () => {
-        const addProjectDialog = createAddProjectDialog();
         const addProjectButton = createHoverButton("Add Projects", "add-projects");
-        const removeProjectDialog = createRemoveProjectDialog();
         const removeProjectButton = createHoverButton("Remove Projects", "remove-projects");
         const allProjectButton = createHoverButton("All Projects", "all-projects");
         addProjectButton.addEventListener("click", () => { addProjectDialog.showModal(); });
-        removeProjectButton.addEventListener("click", () => { removeProjectDialog.showModal(); });
-        projectsButton.append(addProjectDialog, addProjectButton, removeProjectDialog, removeProjectButton, allProjectButton);
+        removeProjectButton.addEventListener("click", () => {
+            createProjectOptions('#remove-project', 1);
+            removeProjectDialog.showModal();
+        });
+        projectsButton.append(addProjectButton, removeProjectButton, allProjectButton);
     });
     projectsButton.addEventListener('mouseleave', () => {
         const childButtons = document.querySelectorAll('.hover-button');
         childButtons.forEach(button => { button.remove(); });
     });
+    projectsButton.append(addProjectDialog, removeProjectDialog);
 }
 
 function runMenuListeners() {
