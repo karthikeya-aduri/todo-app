@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todo List</title>
+  <script defer src="main.js"></script></head>
+  <body>
+    <div id="menu">
+      <ul>
+        <li><img src="11f00f3adb9231a0c8cf.png" alt="menu" id="menu-icon" /></li>
+        <li>
+          <button type="button" id="show-today" class="menu-item">Today</button>
+        </li>
+        <li>
+          <button type="button" id="show-all" class="menu-item">
+            All Tasks
+          </button>
+        </li>
+        <li>
+          <button type="button" id="show-completed" class="menu-item">
+            Completed Tasks
+          </button>
+        </li>
+        <li>
+          <button type="button" id="show-projects">Projects</button>
+        </li>
+      </ul>
+      <div id="bottom-buttons">
+        <button type="button" id="remove-completed">
+          Remove Completed Tasks
+        </button>
+        <button type="button" id="toggle-theme">
+          <img src="ec0e33374566701b36c4.png" id="dark" alt="dark" />
+        </button>
+      </div>
+    </div>
+    <div id="dashboard">
+      <div id="greeting">
+        <h1></h1>
+      </div>
+      <div id="task-container">
+        <dialog id="task-dialog">
+          <form method="post" id="task-form">
+            <input
+              type="text"
+              name="title"
+              id="task-title"
+              placeholder="Task Title"
+              required
+            />
+            <input
+              type="text"
+              name="description"
+              id="task-description"
+              placeholder="Task Description"
+            />
+            <label for="dueDate">Due Date:</label>
+            <input type="date" name="dueDate" id="task-dueDate" required />
+            <div id="task-priority" selected-priority="0">
+              <button
+                type="button"
+                class="priority"
+                id="low-priority"
+                pdata="1"
+              >
+                Low
+              </button>
+              <button
+                type="button"
+                class="priority"
+                id="medium-priority"
+                pdata="2"
+              >
+                Medium
+              </button>
+              <button
+                type="button"
+                class="priority"
+                id="high-priority"
+                pdata="3"
+              >
+                High
+              </button>
+            </div>
+            <label for="project">Select Project :</label>
+            <select name="project" id="select-project"></select>
+            <button type="submit" id="save-task">Add Task</button>
+          </form>
+          <button type="button" id="close-dialog">Close</button>
+        </dialog>
+        <button type="button" id="add-task">+</button>
+      </div>
+    </div>
+  </body>
+</html>
