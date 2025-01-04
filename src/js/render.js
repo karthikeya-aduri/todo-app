@@ -47,7 +47,7 @@ function createElement(tag, attributes = {}, styles = {}, eventListeners = []) {
     return element;
 }
 
-function createTaskData(taskList, i) {
+function createTaskData(taskList, i, projectFlag) {
     const task = taskList[i];
 
     const taskData = createElement('div', {}, { display: 'flex', flexDirection: 'column', gap: '10px' });
@@ -64,27 +64,34 @@ function createTaskData(taskList, i) {
     const taskPriority = createElement('p');
     taskPriority.innerText = "Priority : " + getPriority(task.priority);
 
-    const taskStatus = createElement(
-        'button',
-        { class: 'task-buttons', id: 'status' },
-        {},
-        [{
-            event: "click",
-            handler: (event) => {
-                if (event.target.innerText === "Not Completed") {
-                    event.target.innerText = "Completed";
-                    task.status = event.target.innerText;
-                    filterTaskList(taskList, "completed");
-                } else {
-                    event.target.innerText = "Not Completed";
-                    task.status = event.target.innerText;
-                    filterTaskList(taskList, "not-completed");
+    let taskStatus;
+    if (projectFlag) {
+        taskStatus = createElement('p');
+        taskStatus.innerText = task.status;
+    }
+    else {
+        taskStatus = createElement(
+            'button',
+            { class: 'task-buttons', id: 'status' },
+            {},
+            [{
+                event: "click",
+                handler: (event) => {
+                    if (event.target.innerText === "Not Completed") {
+                        event.target.innerText = "Completed";
+                        task.status = event.target.innerText;
+                        filterTaskList(taskList, "completed");
+                    } else {
+                        event.target.innerText = "Not Completed";
+                        task.status = event.target.innerText;
+                        filterTaskList(taskList, "not-completed");
+                    }
+                    reloadTaskContainer();
                 }
-                reloadTaskContainer();
-            }
-        }]
-    );
-    taskStatus.innerText = task.status;
+            }]
+        );
+        taskStatus.innerText = task.status;
+    }
 
     const project = createElement('p');
     project.innerText = `Project : ${taskList[i].project}`;
@@ -233,32 +240,40 @@ function createEditDialog(taskList, i) {
     return editDialog;
 }
 
-function createTaskElement(taskList, i) {
+function createTaskElement(taskList, i, projectFlag) {
     const taskContainer = createElement('div', { class: 'task' });
-    const taskData = createTaskData(taskList, i);
-    const buttonsContainer = createTaskButtons(taskList, i);
-    const project = createElement('p');
-    project.innerText = taskList[i].project;
+    const taskData = createTaskData(taskList, i, projectFlag);
+    if (projectFlag === false) {
+        const buttonsContainer = createTaskButtons(taskList, i);
+        taskContainer.append(taskData, buttonsContainer);
+    }
+    else {
+        const project = createElement('p');
+        project.innerText = taskList[i].project;
 
-    taskContainer.append(taskData, buttonsContainer);
+        taskContainer.append(taskData);
+    }
 
     return taskContainer;
 }
 
 function clearTasks() {
     const tasks = document.querySelectorAll('.task');
+    const projects = document.querySelector('#project-container');
+    if (projects)
+        projects.remove();
     tasks.forEach((task) => {
         task.remove();
     });
 }
 
-function renderTasksFromAList(taskList) {
+function renderTasksFromAList(taskList, projectFlag = false) {
     clearTasks();
     const taskContainer = document.querySelector('#task-container');
     for (let i in taskList) {
-        let task = createTaskElement(taskList, i);
+        let task = createTaskElement(taskList, i, projectFlag);
         taskContainer.appendChild(task);
     }
 }
 
-export { clearForm, createTaskElement, reloadTaskContainer, renderTasksFromAList, createElement }
+export { clearForm, clearTasks, createTaskElement, reloadTaskContainer, renderTasksFromAList, createElement }

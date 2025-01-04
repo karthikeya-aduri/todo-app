@@ -1,4 +1,4 @@
-import { reloadTaskContainer, renderTasksFromAList, createElement } from "./render.js";
+import { reloadTaskContainer, renderTasksFromAList, createElement, clearTasks } from "./render.js";
 import { getTasksForToday, getTasksFromLocalStorage } from "./tasks.js";
 import moonImg from "../assets/moon.png";
 import sunImg from "../assets/sun.png";
@@ -200,6 +200,26 @@ function projectsListener() {
         removeProjectButton.addEventListener("click", () => {
             createProjectOptions('#remove-project', 1);
             removeProjectDialog.showModal();
+        });
+        allProjectButton.addEventListener("click", () => {
+            clearTasks();
+            const taskContainer = document.querySelector('#task-container');
+            let projectList = JSON.parse(localStorage.getItem("projects"));
+            const projectDiv = createElement('div', { id: 'project-container' });
+            for (let i = 0; i < projectList.length; i++) {
+                const project = createElement('button', { class: "project-button", id: `${projectList[i]}` });
+                if (i)
+                    project.innerText = projectList[i];
+                else
+                    project.innerText = "Default";
+                project.addEventListener('click', () => {
+                    let taskList = getTasksFromLocalStorage("not-completed").concat(getTasksFromLocalStorage("completed"));
+                    taskList = taskList.filter(task => task.project === project.id);
+                    renderTasksFromAList(taskList, true);
+                });
+                projectDiv.append(project);
+            }
+            taskContainer.append(projectDiv);
         });
         projectsButton.append(addProjectButton, removeProjectButton, allProjectButton);
     });

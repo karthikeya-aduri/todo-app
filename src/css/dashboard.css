@@ -37,3 +37,22 @@
 #add-task:hover {
     background-color: var(--hoverColor);
 }
+
+#project-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.project-button {
+    background-color: var(--mainBackgroundColor);
+    color: var(--mainForegroundColor);
+    border: 0;
+    font-size: 1rem;
+    text-align: left;
+    padding: 16px;
+}
+
+.project-button:hover {
+    text-decoration: underline;
+}
